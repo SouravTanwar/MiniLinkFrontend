@@ -1,9 +1,9 @@
 import React from 'react'
 
 const Settings = () => {
-  return (
+    return (
     <div>Settings</div>
-  )
+    )
 }
 
 export default Settings
