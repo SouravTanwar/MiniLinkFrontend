@@ -22,8 +22,7 @@ export const getDeviceWiseClicks = async () => {
 
 export const getAnalyticsData = async (page = 1) => {
     try {
-        const { data } = await API.get(`/analytics/link-analytics`);
-        console.log(data.data)
+        const { data } = await API.get(`/analytics/link-analytics?page=${page}`);
         return data.data;
     } catch (error) {
         throw error;

@@ -13,7 +13,6 @@ export const AuthProvider = ({ children }) => {
         try {
             const { data } = await API.get("/users/user-account"); // Backend provides user data
             setUser(data.data);
-            console.log("AutCon-Ck_user1")
         } catch (error) {
             setUser(null);
         }

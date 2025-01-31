@@ -18,7 +18,7 @@ const Links = () => {
     const fetchLinks = async () => {
         try {
             const data = await getLinks(currentPage);
-            setLinks([...data.docs]);
+            setLinks(data.docs);
             setTotalPages(data.totalPages);
         } catch (error) {
             toast.error("Failed to fetch links");

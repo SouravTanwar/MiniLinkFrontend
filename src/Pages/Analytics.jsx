@@ -10,19 +10,18 @@ const Analytics = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetchAnalytics(currentPage);
+        fetchAnalytics();
     }, [currentPage]);
 
     const fetchAnalytics = async () => {
         try {
             setLoading(true);
             const  data  = await getAnalyticsData(currentPage)
-            console.log(data)
-            setAnalytics([...data]);
-            setTotalPages(data.total); // Adjust as per backend response
+            setAnalytics(data.docs);
+            setTotalPages(data.totalPages); 
         } catch (error) {
             console.log(error)
-            toast.error("Failed to fetch fuckin analytics data");
+            toast.error("Failed to fetch analytics data");
         } finally {
             setLoading(false);
         }
@@ -59,9 +58,9 @@ const Analytics = () => {
 
             {/* Pagination Controls */}
             <div className="pagination">
-                <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>Previous</button>
+                <button disabled={currentPage === 1} onClick={() => setCurrentPage(prev => prev - 1)}>Previous</button>
                 <span> Page {currentPage} of {totalPages} </span>
-                <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(prev => prev + 1)}>Next</button>
             </div>
         </div>
     );
