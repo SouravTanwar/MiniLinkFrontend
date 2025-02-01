@@ -5,26 +5,21 @@ import { copyToClipboard } from "../Utils/copyToClipboard";
 import { toast } from "react-toastify";
 import CreateEditLinkModal from "../Modals/CreateEditLinkModal";
 import Modal from "../Modals/alertModal";
-import { useTable, usePagination } from 'react-table';
-import { FaEdit, FaTrash, FaClipboard } from 'react-icons/fa';
-import "../Styles/Link.css";
+import { useTable, usePagination } from "react-table";
+import { FaEdit, FaTrash, FaClipboard } from "react-icons/fa";
+import "./Link.css";
 
 const Links = () => {
     const [links, setLinks] = useState([]);
     const { searchTerm } = useContext(SearchContext);
-    const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedLink, setSelectedLink] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-    useEffect(() => {
-        fetchLinks();
-    }, [currentPage]);
-
-    const fetchLinks = async () => {
+    const fetchLinks = async (page) => {
         try {
-            const data = await getLinks(currentPage);
+            const data = await getLinks(page);
             setLinks(data.docs);
             setTotalPages(data.totalPages);
         } catch (error) {
@@ -32,16 +27,19 @@ const Links = () => {
         }
     };
 
+    useEffect(() => {
+        fetchLinks(1); 
+    }, []);
+
     const handleEditLink = async (data) => {
         try {
             await updateLink(selectedLink._id, data);
             toast.success("Link updated");
-            fetchLinks();
+            fetchLinks(pageIndex + 1); 
         } catch (error) {
-            console.log(error)
             toast.error("Link not updated!");
         }
-    }
+    };
 
     const handleDelete = async () => {
         try {
@@ -62,51 +60,66 @@ const Links = () => {
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Date',
-                accessor: 'createdAt',
+                Header: "Date",
+                accessor: "createdAt",
                 Cell: ({ value }) => new Date(value).toLocaleDateString(),
             },
             {
-                Header: 'Short Link',
-                accessor: 'shortLink',
+                Header: "Short Link",
+                accessor: "shortLink",
                 Cell: ({ value }) => (
                     <div className="short-link-container">
-                        <span className="short-link">http://localhost:8000/api/v1/links/r/{value}</span>
-                        <button onClick={() => copyToClipboard(value)}><FaClipboard /></button>
+                        <span className="short-link">
+                            http://localhost:8000/api/v1/links/r/{value}
+                        </span>
+                        <button onClick={() => copyToClipboard(value)}>
+                            <FaClipboard />
+                        </button>
                     </div>
                 ),
             },
             {
-                Header: 'Original Link',
-                accessor: 'originalLink',
+                Header: "Original Link",
+                accessor: "originalLink",
             },
             {
-                Header: 'Remarks',
-                accessor: 'remarks',
+                Header: "Remarks",
+                accessor: "remarks",
             },
             {
-                Header: 'Clicks',
-                accessor: 'clicks',
+                Header: "Clicks",
+                accessor: "clicks",
             },
             {
-                Header: 'Status',
-                accessor: 'status',
+                Header: "Status",
+                accessor: "status",
                 Cell: ({ value }) => (
-                    <span className={`status ${value === 'Active' ? 'active' : 'inactive'}`}>{value}</span>
+                    <span className={`status ${value === "Active" ? "active" : "inactive"}`}>
+                        {value}
+                    </span>
                 ),
             },
             {
-                Header: 'Actions',
+                Header: "Actions",
                 Cell: ({ row }) => (
                     <div>
-                        <button onClick={() => {
-                            setSelectedLink(row.original);
-                            setIsModalOpen(true);
-                        }}><FaEdit /></button>
-                        <button className="delete-btn" onClick={() => {
-                            setSelectedLink(row.original);
-                            setShowDeleteModal(true);
-                        }}><FaTrash /></button>
+                        <button
+                            onClick={() => {
+                                setSelectedLink(row.original);
+                                setIsModalOpen(true);
+                            }}
+                        >
+                            <FaEdit />
+                        </button>
+                        <button
+                            className="delete-btn"
+                            onClick={() => {
+                                setSelectedLink(row.original);
+                                setShowDeleteModal(true);
+                            }}
+                        >
+                            <FaTrash />
+                        </button>
                     </div>
                 ),
             },
@@ -122,8 +135,6 @@ const Links = () => {
         page,
         canPreviousPage,
         canNextPage,
-        pageOptions,
-        gotoPage,
         previousPage,
         nextPage,
         state: { pageIndex },
@@ -131,7 +142,7 @@ const Links = () => {
         {
             columns,
             data: filteredLinks,
-            initialState: { pageIndex: currentPage - 1 },
+            initialState: { pageIndex: 0 },
             manualPagination: true,
             pageCount: totalPages,
         },
@@ -142,21 +153,21 @@ const Links = () => {
         <div className="links-container">
             <table className="links-table" {...getTableProps()}>
                 <thead>
-                    {headerGroups.map(headerGroup => (
+                    {headerGroups.map((headerGroup) => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map(column => (
-                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                            {headerGroup.headers.map((column) => (
+                                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
                             ))}
                         </tr>
                     ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                    {page.map(row => {
+                    {page.map((row) => {
                         prepareRow(row);
                         return (
                             <tr {...row.getRowProps()}>
-                                {row.cells.map(cell => (
-                                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                {row.cells.map((cell) => (
+                                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                                 ))}
                             </tr>
                         );
@@ -165,26 +176,35 @@ const Links = () => {
             </table>
 
             <div className="pagination">
-                <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+                <button
+                    onClick={() => {
+                        previousPage();
+                        fetchLinks(pageIndex);
+                    }}
+                    disabled={!canPreviousPage}
+                >
                     Previous
                 </button>
                 <span>
-                    Page{' '}
-                    <strong>
-                        {pageIndex + 1} of {pageOptions.length}
-                    </strong>
+                    Page <strong>{pageIndex + 1} of {totalPages}</strong>
                 </span>
-                <button onClick={() => nextPage()} disabled={!canNextPage}>
+                <button
+                    onClick={() => {
+                        nextPage();
+                        fetchLinks(pageIndex + 2);
+                    }}
+                    disabled={!canNextPage}
+                >
                     Next
                 </button>
             </div>
 
             {isModalOpen && (
-                <CreateEditLinkModal 
+                <CreateEditLinkModal
                     isOpen={isModalOpen}
-                    linkData={selectedLink} 
-                    onClose={() => setIsModalOpen(false)} 
-                    onSave={(editLinkData) => {handleEditLink(editLinkData)}}
+                    linkData={selectedLink}
+                    onClose={() => setIsModalOpen(false)}
+                    onSave={(editLinkData) => handleEditLink(editLinkData)}
                 />
             )}
             {showDeleteModal && (

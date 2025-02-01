@@ -1,4 +1,3 @@
-/* Sidebar.css */
 .sidebar {
     width: 250px;
     height: 100vh;
@@ -11,12 +10,13 @@
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
+    border:#a9a9ad ;
 }
 
 .sidebar-logo {
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 30px; /* Add spacing below the logo */
+    margin-bottom: 30px; 
     text-align: center;
     color: #007bff;
 }
@@ -24,7 +24,7 @@
 .sidebar ul {
     list-style-type: none;
     padding: 0;
-    width: 100%; /* Ensure the ul takes the full width */
+    width: 100%; 
 }
 
 .sidebar ul li {
@@ -43,7 +43,7 @@
 }
 
 .sidebar ul li a .icon {
-    margin-right: 10px; /* Add spacing between icon and text */
+    margin-right: 10px;
 }
 
 .sidebar ul li a:hover,
@@ -56,5 +56,5 @@
     width: 80%;
     height: 1px;
     background-color: #444;
-    margin: 20px 0; /* Add spacing around the separator */
+    margin: 20px 0; 
 }

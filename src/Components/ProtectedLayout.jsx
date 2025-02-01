@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
-import "../Styles/ProtectedLayout.css"; // Import the CSS file for layout
+import "./ProtectedLayout.css"; 
 
 const ProtectedLayout = ({ children }) => {
     return (

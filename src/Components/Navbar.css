@@ -1,17 +1,19 @@
-/* Navbar.css */
+
 .navbar {
     height: 60px;
-    background-color: #333;
-    color: white;
+    background-color: #FFFFFF;
+    color: #181820;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 15px 15px;
     padding: 0 20px;
     position: fixed;
-    width: calc(100% - 250px); /* Full width minus the sidebar width */
+    width: calc(100% - 250px); 
     top: 0;
-    left: 250px; /* Adjust for the width of the sidebar */
+    left: 250px; 
     z-index: 1000;
+    border-radius: 3px solid #ECECF2;
 }
 
 .navbar-left h2 {
@@ -20,9 +22,9 @@
 }
 
 .navbar-left p {
-    margin: 0;
+    margin-left: 25px;
     font-size: 14px;
-    color: #ccc;
+    color: #878BA9;
 }
 
 .navbar-center {
@@ -31,10 +33,10 @@
 }
 
 .create-btn {
-    background-color: #007bff;
+    background-color: #1B48DA;
     color: white;
     border: none;
-    padding: 8px 12px;
+    padding: 10px 12px;
     margin-right: 20px;
     border-radius: 4px;
     cursor: pointer;
@@ -49,15 +51,16 @@
 .search-form {
     display: flex;
     align-items: center;
-    background-color: #444;
+    background-color: #FFFFFF;
     padding: 5px;
     border-radius: 4px;
+    border:2px solid #ECECF2;
 }
 
 .search-form input {
     background: none;
     border: none;
-    color: white;
+    color: #878BA9;
     padding: 5px;
     outline: none;
     width: 200px;
@@ -81,20 +84,20 @@
 }
 
 
-/* Add this to your CSS file */
+
 .user-initials {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px; /* Adjust size as needed */
-    height: 40px; /* Adjust size as needed */
+    width: 40px; 
+    height: 40px; 
     border-radius: 50%;
-    background-color: #007bff; /* Adjust background color as needed */
-    color: white;
-    font-size: 16px; /* Adjust font size as needed */
+    background-color: #FDE48A; 
+    color: #923E0E;
+    font-size: 16px; 
     font-weight: bold;
     text-transform: uppercase;
-    margin-right: 8px; /* Adjust spacing as needed */
+    margin-right: 30px;
     cursor: pointer;
 }
 
@@ -102,18 +105,18 @@
 .dropdown-menu {
     position: absolute;
     top: 100%;
-    right: 0;
-    background-color: #444;
-    border-radius: 4px;
+    right: 10px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border:2px solid #ECECF2;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-menu button {
     background: none;
     border: none;
-    color: white;
-    padding: 10px 20px;
+    color: #878BA9;
+    padding: 5px 20px;
     width: 100%;
     text-align: left;
     cursor: pointer;

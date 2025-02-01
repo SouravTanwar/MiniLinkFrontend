@@ -10,14 +10,14 @@ export const DashboardProvider = ({ children }) => {
 
     const fetchAnalytics = async () => {
         try {
-            // Fetch data for date-wise clicks
+
             const dateWiseData = await getDateWiseClicks();
             if (dateWiseData) {
                 dateWiseData.sort((a, b) => new Date(b._id) - new Date(a._id));
                 setDateWiseClicks([...dateWiseData]);
             }
     
-            // Fetch data for device-wise clicks
+
             const deviceWiseData = await getDeviceWiseClicks();
             if (deviceWiseData) {
                 deviceWiseData.sort((a, b) => b.totalClicks - a.totalClicks);

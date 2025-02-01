@@ -1,11 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
-import Sidebar from "./Components/Sidebar";
-import Navbar from "./Components/Navbar";
 import Dashboard from "./Pages/Dashboard";
 import Links from "./Pages/Links";
 import Analytics from "./Pages/Analytics";

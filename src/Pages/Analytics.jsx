@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAnalyticsData } from "../Services/analyticsService";
 import { toast } from "react-toastify";
-import "../Styles/Analytics.css"
+import "./Analytics.css"
 
 const Analytics = () => {
     const [analytics, setAnalytics] = useState([]);

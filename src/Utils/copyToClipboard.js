@@ -5,8 +5,8 @@ export const copyToClipboard = (text) => {
     navigator.clipboard.writeText(shortLink)
     .then(() => {
         toast.success("Link copied to clipboard!", {
-            position: "bottom-left", // Set position to bottom-left
-            autoClose: 2000, // Auto close after 2 seconds
+            position: "bottom-left", 
+            autoClose: 2000, 
             hideProgressBar: true,
             closeOnClick: true,
             pauseOnHover: false,

@@ -34,7 +34,7 @@ const Login = () => {
     return (
         <div className="login-page">
             <div className="login-left">
-                <div className="login-logo">cuvette</div>
+                <div className="login-logo"><img src = '/Logo.png' /></div>
             </div>
             <div className="login-right">
                 <div className="login-header">

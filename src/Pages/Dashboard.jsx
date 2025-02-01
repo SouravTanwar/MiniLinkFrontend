@@ -28,26 +28,26 @@ const Dashboard = () => {
         ],
     };
 
-    // Prepare data for Device-wise Clicks Chart
+
     const deviceWiseData = {
         labels: deviceClicks?.map((item) => item.deviceType),
         datasets: [
             {
                 data: deviceClicks?.map((item) => item.totalClicks),
-                backgroundColor: "#1B48DA", // Green
+                backgroundColor: "#1B48DA", 
                 borderRadius: 1,
-                barThickness: 12, // Slim bar
+                barThickness: 12, 
             },
         ],
     };
 
-    // Chart options for minimal horizontal bar charts:
+
     const chartOptions = {
         animation: { duration: 0 },
         indexAxis: "y",
         layout: {
             padding: {
-                right: 40  // Increase this value as needed for extra space
+                right: 40  
             }
         },
         scales: {

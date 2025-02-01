@@ -5,10 +5,10 @@ import { updateUser, deleteUser } from "../Services/settingService";
 import Modal from "../Modals/alertModal";
 import { toast } from "react-toastify";
 import { validateEmail,validateName , validatePhone } from "../Utils/validation";
-import "./Settings.css"; // Import the CSS file
+import "./Settings.css"; 
 
 const Settings = () => {
-    const { user } = useContext(AuthContext); // Get user & logout from context
+    const { user } = useContext(AuthContext); 
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: user?.name || "",
@@ -18,7 +18,7 @@ const Settings = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
 
-    // Handle Input Change
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -31,12 +31,12 @@ const Settings = () => {
         setShowUpdateModal(true)
     }
 
-    // Update User
+
     const handleUpdate = async () => {
         try {
-            await updateUser(formData); // Call Service Function
+            await updateUser(formData); 
             toast.success("Profile updated successfully! Please Login Again");
-            setShowUpdateModal(false); // Close the update modal after success
+            setShowUpdateModal(false); 
             navigate("/login");
             
         } catch (error) {
@@ -47,9 +47,9 @@ const Settings = () => {
 
     const handleDelete = async () => {
         try {
-            await deleteUser(); // Call Service Function
+            await deleteUser(); 
             toast.success("Account deleted successfully! Please Login Again");
-            setShowDeleteModal(false); // Close the delete modal after success
+            setShowDeleteModal(false);
             navigate("/login");
         } catch (error) {
             toast.error("Deletion failed!");

@@ -1,4 +1,3 @@
-/* Modal Overlay */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -6,14 +5,14 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    /* Semi-transparent background */
+
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
 }
 
-/* Modal Content */
+
 .modal-content {
     background: white;
     padding: 20px;
@@ -23,14 +22,12 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Message */
 .modal-content p {
     font-size: 16px;
     margin-bottom: 20px;
     color: #333;
 }
 
-/* Buttons */
 .modal-content button {
     padding: 8px 16px;
     margin: 5px;
@@ -41,7 +38,7 @@
     transition: 0.2s ease-in-out;
 }
 
-/* Confirm (Yes) Button */
+
 .modal-content button:first-child {
     background: #28a745;
     color: white;
@@ -51,7 +48,7 @@
     background: #218838;
 }
 
-/* Cancel (No) Button */
+
 .modal-content button:last-child {
     background: #dc3545;
     color: white;
@@ -61,12 +58,12 @@
     background: #c82333;
 }
 
-/* Delete Button (If isDelete is true) */
+
 .delete-btn {
-    background: #ff0000 !important;
-    color: white !important;
+    background: #ff0000;
+    color: white ;
 }
 
 .delete-btn:hover {
-    background: #cc0000 !important;
+    background: #cc0000;
 }

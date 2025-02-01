@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { FaTachometerAlt, FaLink, FaChartLine, FaCog } from "react-icons/fa";
-import "../Styles/Sidebar.css";
+import "./Sidebar.css";
 
 const Sidebar = () => {
     return (
         <aside className="sidebar">
-            <div className="sidebar-logo">cuvette</div>
+            <div className="sidebar-logo"><img src="/Logo.png"/></div>
             <ul>
                 <li>
                     <NavLink to="/dashboard" activeClassName="active">

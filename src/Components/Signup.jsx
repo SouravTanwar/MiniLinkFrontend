@@ -36,7 +36,7 @@ const Signup = () => {
     return (
         <div className="signup-page">
             <div className="signup-left">
-                <div className="signup-logo">cuvette</div>
+                <div className="signup-logo"><img src = '/Logo.png' /></div>
             </div>
             <div className="signup-right">
                 <div className="signup-header">
