@@ -21,6 +21,10 @@
     color: #007bff;
 }
 
+.tabs{
+    margin-top: 25%;
+}
+
 .sidebar ul {
     list-style-type: none;
     padding: 0;

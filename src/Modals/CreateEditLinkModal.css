@@ -72,19 +72,19 @@ textarea {
 }
 
 .save-btn {
-    background: #4caf50;
+    background: #007bff;
     color: white;
 }
 
 .cancel-btn {
-    background: #f44336;
+    background: #676f76;
     color: white;
 }
 
 .save-btn:hover {
-    background: #45a049;
+    background: #207bdd;
 }
 
 .cancel-btn:hover {
-    background: #d32f2f;
+    background: #494f54;
 }

@@ -72,7 +72,7 @@ const Settings = () => {
                 <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
             </div>
             <button className="save-button" onClick={handleCheckSave}>Save Changes</button>
-            <button className="delete-btn" onClick={() => setShowDeleteModal(true)}>Delete Account</button>
+            <button className="delete-button" onClick={() => setShowDeleteModal(true)}>Delete Account</button>
     
             {/* Update Confirmation Modal */}
             {showUpdateModal && (
@@ -87,7 +87,7 @@ const Settings = () => {
             {/* Delete Confirmation Modal */}
             {showDeleteModal && (
                 <Modal
-                    message="Are you sure you want to delete your account? This action is irreversible!"
+                    message="Are you sure you want to delete the account?"
                     onConfirm={handleDelete}
                     onCancel={() => setShowDeleteModal(false)}
                     isDelete={true}

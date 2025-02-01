@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 
 export const copyToClipboard = (text) => {
-    const shortLink = `http://localhost:8000/api/v1/links/r/${text}`;
+    const shortLink = `https://minilinkbackend.onrender.com/api/v1/links/r/${text}`;
     navigator.clipboard.writeText(shortLink)
     .then(() => {
         toast.success("Link copied to clipboard!", {

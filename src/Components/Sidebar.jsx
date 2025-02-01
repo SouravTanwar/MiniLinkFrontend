@@ -6,7 +6,7 @@ const Sidebar = () => {
     return (
         <aside className="sidebar">
             <div className="sidebar-logo"><img src="/Logo.png"/></div>
-            <ul>
+            <ul className="tabs">
                 <li>
                     <NavLink to="/dashboard" activeClassName="active">
                         <FaTachometerAlt className="icon" />

@@ -14,7 +14,7 @@
 .form-group label {
     font-weight: bold;
     margin-right: 10px;
-    min-width: 100px; 
+    min-width: 100px;
 }
 
 .form-group input {
@@ -50,7 +50,7 @@ button:active {
     color: #fff;
 }
 
-.delete-btn {
+.delete-button {
     background-color: #dc3545;
     color: #fff;
 }

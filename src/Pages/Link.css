@@ -25,18 +25,26 @@
 }
 
 .links-table .status.active {
-    color: green;
+    color: #1EB036;
 }
 
 .links-table .status.inactive {
-    color: yellow;
+    color: #B0901E;
+}
+
+.edit-btn .delete-btn {
+    background: none;
 }
 
 .pagination {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 40px 0;
+}
+
+.page-no{
+    width: max-content;
 }
 
 .pagination button {
@@ -45,9 +53,14 @@
     background-color: #007bff;
     color: white;
     cursor: pointer;
+    margin: 0px 20px;
+    width: max-content;
 }
 
 .pagination button:disabled {
     background-color: #ddd;
     cursor: not-allowed;
+    padding: 5px 10px;
+    margin: 0px 20px;
+    width: max-content;
 }

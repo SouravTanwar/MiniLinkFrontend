@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import CreateEditLinkModal from "../Modals/CreateEditLinkModal";
 import Modal from "../Modals/alertModal";
 import { useTable, usePagination } from "react-table";
-import { FaEdit, FaTrash, FaClipboard } from "react-icons/fa";
 import "./Link.css";
 
 const Links = () => {
@@ -65,22 +64,22 @@ const Links = () => {
                 Cell: ({ value }) => new Date(value).toLocaleDateString(),
             },
             {
+                Header: "Original Link",
+                accessor: "originalLink",
+            },
+            {
                 Header: "Short Link",
                 accessor: "shortLink",
                 Cell: ({ value }) => (
                     <div className="short-link-container">
                         <span className="short-link">
-                            http://localhost:8000/api/v1/links/r/{value}
+                        https://minilinkbackend.onrender.com/api/v1/links/r/{value}
                         </span>
                         <button onClick={() => copyToClipboard(value)}>
-                            <FaClipboard />
+                            📋
                         </button>
                     </div>
                 ),
-            },
-            {
-                Header: "Original Link",
-                accessor: "originalLink",
             },
             {
                 Header: "Remarks",
@@ -94,7 +93,7 @@ const Links = () => {
                 Header: "Status",
                 accessor: "status",
                 Cell: ({ value }) => (
-                    <span className={`status ${value === "Active" ? "active" : "inactive"}`}>
+                    <span className={`status ${value === "active" ? "active" : "inactive"}`}>
                         {value}
                     </span>
                 ),
@@ -104,12 +103,13 @@ const Links = () => {
                 Cell: ({ row }) => (
                     <div>
                         <button
+                            className="edit-btn"
                             onClick={() => {
                                 setSelectedLink(row.original);
                                 setIsModalOpen(true);
                             }}
                         >
-                            <FaEdit />
+                            📝
                         </button>
                         <button
                             className="delete-btn"
@@ -118,7 +118,7 @@ const Links = () => {
                                 setShowDeleteModal(true);
                             }}
                         >
-                            <FaTrash />
+                            🗑️
                         </button>
                     </div>
                 ),
@@ -185,7 +185,7 @@ const Links = () => {
                 >
                     Previous
                 </button>
-                <span>
+                <span className="page-no">
                     Page <strong>{pageIndex + 1} of {totalPages}</strong>
                 </span>
                 <button
@@ -209,7 +209,7 @@ const Links = () => {
             )}
             {showDeleteModal && (
                 <Modal
-                    message="Are you sure you want to delete this link?"
+                    message="Are you sure, you want to remove it?"
                     onConfirm={handleDelete}
                     onCancel={() => setShowDeleteModal(false)}
                     isDelete={true}

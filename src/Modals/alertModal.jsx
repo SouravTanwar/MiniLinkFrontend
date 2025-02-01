@@ -1,4 +1,4 @@
-import "./alertModal.style.css"
+import "./alertModal.css"
 
 const Modal = ({ message, onConfirm, onCancel, isDelete }) => {
     return (
