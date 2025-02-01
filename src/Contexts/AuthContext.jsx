@@ -7,6 +7,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     // Function to fetch user session (on app load)
     const checkUserSession = async () => {
@@ -16,6 +17,7 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             setUser(null);
         }
+        setLoading(null)
     };
 
     useEffect(() => {
@@ -71,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, signup, logout }}>
+        <AuthContext.Provider value={{ user, login, signup, logout, loading }}>
             {children}
         </AuthContext.Provider>
     );

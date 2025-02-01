@@ -1,15 +1,21 @@
-import { useEffect, useState } from "react";
-import { getLinks, deleteLink } from "../Services/linksService";
+import { useEffect, useState, useContext } from "react";
+import { SearchContext } from "../Contexts/SearchContext";
+import { getLinks, deleteLink, updateLink } from "../Services/linksService";
 import { copyToClipboard } from "../Utils/copyToClipboard";
 import { toast } from "react-toastify";
+import CreateEditLinkModal from "../Modals/CreateEditLinkModal";
+import Modal from "../Modals/alertModal";
 import "../Styles/Link.css"
 
 
 const Links = () => {
     const [links, setLinks] = useState([]);
-    const [search, setSearch] = useState("");
+    const { searchTerm } = useContext(SearchContext);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedLink, setSelectedLink] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
         fetchLinks();
@@ -25,30 +31,38 @@ const Links = () => {
         }
     };
 
-    const handleDelete = async (linkId) => {
-        if (!window.confirm("Are you sure you want to delete this link?")) return;
+    const handleEditLink = async (data) => {
         try {
+            await updateLink(selectedLink._id, data);
+            toast.success("link updated");
+            fetchLinks();
+        } catch (error) {
+            console.log(error)
+            toast.error("link not updated!");
+        }
+    }
+
+    const handleDelete = async () => {
+        
+        try {
+            const linkId=selectedLink._id
             await deleteLink(linkId);
             setLinks((prev) => prev.filter((link) => link._id !== linkId));
             toast.success("Link deleted successfully");
+            setShowDeleteModal(false);
         } catch (error) {
             toast.error("Error deleting link");
         }
     };
 
+
     const filteredLinks = links.filter((link) =>
-        link.remarks.toLowerCase().includes(search.toLowerCase())
+        link.remarks.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
         <div className="links-container">
             <div className="links-header">
-                <input
-                    type="text"
-                    placeholder="Search by remarks..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
             </div>
 
             <table className="links-table">
@@ -76,7 +90,14 @@ const Links = () => {
                             <td>{link.clicks}</td>
                             <td>{link.status}</td>
                             <td>
-                                <button className="delete-btn" onClick={() => handleDelete(link._id)}>🗑</button>
+                                <button onClick={() => {
+                                    setSelectedLink(link);
+                                    setIsModalOpen(true);
+                                }}>✏️</button>
+                                <button className="delete-btn" onClick={() => {
+                                    setSelectedLink(link);
+                                    setShowDeleteModal(true);
+                                    }}>🗑</button>
                             </td>
                         </tr>
                     ))}
@@ -99,6 +120,22 @@ const Links = () => {
                     Next
                 </button>
             </div>
+            {isModalOpen && (
+                <CreateEditLinkModal 
+                    isOpen={isModalOpen}
+                    linkData={selectedLink} 
+                    onClose={() => setIsModalOpen(false)} 
+                    onSave={(editLinkData) => {handleEditLink(editLinkData)}}
+                />
+            )}
+            {showDeleteModal && (
+                <Modal
+                    message="Are you sure, you want to remove it"
+                    onConfirm={handleDelete}
+                    onCancel={() => setShowDeleteModal(false)}
+                    isDelete={true}
+                />
+            )}
         </div>
     );
 };

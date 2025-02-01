@@ -1,12 +1,14 @@
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Contexts/AuthContext";
 import { updateUser, deleteUser } from "../Services/settingService";
 import Modal from "../Modals/alertModal";
 import { toast } from "react-toastify";
+import { validateEmail,validateName , validatePhone } from "../Utils/validation";
 
 const Settings = () => {
-    const { user, logout } = useContext(AuthContext); // Get user & logout from context
-    console.log(user)
+    const { user } = useContext(AuthContext); // Get user & logout from context
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: user?.name || "",
         email: user?.email || "",
@@ -20,15 +22,24 @@ const Settings = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleCheckSave = async () => {
+        if (!validateName(formData.name) || !validateEmail(formData.email) || !validatePhone(formData.phoneNumber)) {
+            toast.error("Invalid input fields");
+            return;
+        }
+        setShowUpdateModal(true)
+    }
+
     // Update User
     const handleUpdate = async () => {
         try {
             await updateUser(formData); // Call Service Function
-            toast.success("Profile updated successfully!");
-            
+            toast.success("Profile updated successfully! Please Login Again");
             setShowUpdateModal(false); // Close the update modal after success
             navigate("/login");
+            
         } catch (error) {
+            console.log(error)
             toast.error("Update failed!");
         }
     };
@@ -36,9 +47,9 @@ const Settings = () => {
     const handleDelete = async () => {
         try {
             await deleteUser(); // Call Service Function
-            toast.success("Account deleted successfully!");
-            navigate("/login");
+            toast.success("Account deleted successfully! Please Login Again");
             setShowDeleteModal(false); // Close the delete modal after success
+            navigate("/login");
         } catch (error) {
             toast.error("Deletion failed!");
         }
@@ -59,7 +70,7 @@ const Settings = () => {
                 <label>mobile:</label>
                 <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
             </div>
-            <button onClick={() => setShowUpdateModal(true)}>Save Changes</button>
+            <button onClick={handleCheckSave}>Save Changes</button>
             <button className="delete-btn" onClick={() => setShowDeleteModal(true)}>Delete Account</button>
 
             {/* Update Confirmation Modal */}

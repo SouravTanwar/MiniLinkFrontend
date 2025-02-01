@@ -10,7 +10,7 @@ export const validatePassword = (password, confirmPassword) => {
     if (password !== confirmPassword) {
         return "Passwords do not match.";
     }
-    return null; // Null means validation passed
+    return null;
 };
 
 export const validateName = (name) => {
@@ -18,5 +18,10 @@ export const validateName = (name) => {
 };
 
 export const validatePhone = (phone) => {
-    return /^[0-9]\d{9}$/.test(phone); // Indian phone number validation
+    return /^[0-9]\d{9}$/.test(phone);
 };
+
+export const validateUrl = (url) => {
+    return /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(url);
+};
+

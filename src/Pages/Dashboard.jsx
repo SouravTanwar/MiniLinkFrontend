@@ -18,14 +18,14 @@ const Dashboard = () => {
                 <div className="border p-4 rounded-lg">
                     <h3 className="font-semibold">Date-wise Clicks</h3>
                     {dateWiseClicks?.length > 0 ? (
-                        dateWiseClicks.map(({ _id, totalClicks }) => (
+                        dateWiseClicks.map(({ _id, cumulativeTotal }) => (
                                 <div
                                     key={_id}
                                     className="flex justify-between items-center mt-2"
                                 >
                                     <span>{_id}</span> 
                                     
-                                    <span>------ {totalClicks}</span>
+                                    <span>------ {cumulativeTotal}</span>
                                 </div>
                             )
                         )

@@ -1,23 +1,28 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../Contexts/AuthContext";
+import { SearchContext } from "../Contexts/SearchContext";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Navbar.css"; // Using Vanilla CSS
 import { toast } from "react-toastify";
+import CreateEditLinkModal from "../Modals/CreateEditLinkModal"
+import { createLink } from "../Services/linksService";
 
-const Navbar = ({ openModal }) => {
+const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
+    const { searchTerm, setSearchTerm } = useContext(SearchContext);
     const navigate = useNavigate();
     const [timeGreeting, setTimeGreeting] = useState("");
     const [date, setDate] = useState("");
-    const [searchTerm, setSearchTerm] = useState("");
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Get current time-based greeting
     useEffect(() => {
         const currentHour = new Date().getHours();
-        if (currentHour < 12) setTimeGreeting("Good Morning");
-        else if (currentHour < 18) setTimeGreeting("Good Afternoon");
-        else setTimeGreeting("Good Evening");
+        if (currentHour < 12) setTimeGreeting("🌄Good Morning");
+        else if (currentHour < 16) setTimeGreeting("🌞Good Afternoon");
+        else if (currentHour < 20) setTimeGreeting("🌇Good Evening");
+        else setTimeGreeting("🌃Good Night");
     }, []);
 
     // Get current date
@@ -28,14 +33,23 @@ const Navbar = ({ openModal }) => {
     }, []);
 
     // Handle search input
-    const handleSearch = (e) => {
-        e.preventDefault();
-        if (!searchTerm.trim()) {
-            toast.error("Enter a remark to search.");
-            return;
+    useEffect(() => {
+        if (searchTerm.trim()) {
+            navigate(`/links?search=${searchTerm}`);
         }
-        navigate(`/links?search=${searchTerm}`);
-    };
+    }, [searchTerm, navigate]);
+
+    const handleCreateNewLink = async (data) => {
+        try {
+            await createLink(data);
+            toast.success("link created");
+            navigate("/links");
+        
+        } catch (error) {
+            console.log(error)
+            toast.error("link not created!");
+        }
+    }
 
     // Logout function
     const handleLogout = () => {
@@ -51,17 +65,16 @@ const Navbar = ({ openModal }) => {
             </div>
 
             <div className="navbar-center">
-                <button className="create-btn" onClick={() => navigate("/links", { state: { openModal: true } })}>
-                    Create New
-                </button>
-                <form onSubmit={handleSearch} className="search-form">
+            <button className="create-btn" onClick={() => setIsModalOpen(true)}>
+                Create New
+            </button>
+                <form className="search-form">
                     <input
                         type="text"
                         placeholder="Search Remarks..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
-                    <button type="submit">🔍</button>
                 </form>
             </div>
 
@@ -77,6 +90,11 @@ const Navbar = ({ openModal }) => {
                     )}
                 </div>
             </div>
+            <CreateEditLinkModal 
+            isOpen={isModalOpen} 
+            onClose={() => setIsModalOpen(false)} 
+            onSave={(newLinkData) => {handleCreateNewLink(newLinkData)}}
+        />
         </nav>
     );
 };

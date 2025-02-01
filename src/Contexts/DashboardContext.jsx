@@ -13,16 +13,18 @@ export const DashboardProvider = ({ children }) => {
             // Fetch data for date-wise clicks
             const dateWiseData = await getDateWiseClicks();
             if (dateWiseData) {
+                dateWiseData.sort((a, b) => new Date(b._id) - new Date(a._id));
                 setDateWiseClicks([...dateWiseData]);
             }
     
             // Fetch data for device-wise clicks
             const deviceWiseData = await getDeviceWiseClicks();
             if (deviceWiseData) {
+                deviceWiseData.sort((a, b) => b.totalClicks - a.totalClicks);
                 setDeviceClicks([...deviceWiseData]);
             }
 
-            const clicks = dateWiseData.length === 0 ? 0 : dateWiseData.sort((a, b) => new Date(b.date) - new Date(a.date))[0].totalClicks;
+            const clicks = dateWiseData.length === 0 ? 0 : dateWiseData[0].cumulativeTotal;
             setTotalClicks(clicks);
 
 
@@ -38,4 +40,3 @@ export const DashboardProvider = ({ children }) => {
     );
 };
 
-// export const useDashboardContext = () => useContext(DashboardContext);
