@@ -13,20 +13,21 @@ import Settings from "./Pages/Settings";
 import { AuthContext } from "./Contexts/AuthContext";
 import { useContext } from "react";
 import "./App.css";
+import PublicLayout from "./Components/Publiclayout";
+import ProtectedLayout from "./Components/ProtectedLayout";
 
 const ProtectedRoute = ({ children }) => {
     const { user } = useContext(AuthContext);
     return user ? (
-        <div className="protected-container">
-            <Sidebar />
-            <main className="main-content">{children}</main>
-        </div>
+        <ProtectedLayout>
+            {children}
+        </ProtectedLayout>
     ) : (
         <Navigate to="/login" />
     );
 };
 
-function App() {
+const App = () => {
     const { user, loading } = useContext(AuthContext);
 
     if (loading) {
@@ -35,27 +36,20 @@ function App() {
 
     return (
         <div className="app-container">
-            {user && <Sidebar />} {/* Sidebar fixed on the left */}
+            <Routes>
+                {/* Public Routes */}
+                <Route path="/login" element={<PublicLayout><Login /></PublicLayout>} />
+                <Route path="/signup" element={<PublicLayout><Signup /></PublicLayout>} />
 
-            {user && <Navbar />} {/* Navbar fixed at the top */}
+                {/* Protected Routes */}
+                <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                <Route path="/links" element={<ProtectedRoute><Links /></ProtectedRoute>} />
+                <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+                <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
 
-            <div className="main-section">
-                <Routes>
-                    {/* Protected Routes (With Sidebar and Navbar) */}
-                    <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                    <Route path="/links" element={<ProtectedRoute><Links /></ProtectedRoute>} />
-                    <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
-                    <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-
-                    {/* Public Routes (No Sidebar, No Navbar) */}
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-
-                    {/* Default Route - Redirect to Dashboard if logged in, otherwise Login */}
-                    <Route path="*" element={user ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
-                </Routes>
-            </div>
-
+                {/* Default Route */}
+                <Route path="*" element={user ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+            </Routes>
             <ToastContainer position="top-right" autoClose={3000} />
         </div>
     );

@@ -1,25 +1,60 @@
+/* Sidebar.css */
 .sidebar {
-    width: 200px;
+    width: 250px;
     height: 100vh;
-    background: #343a40;
-    padding-top: 20px;
+    background-color: #ffff;
+    color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.sidebar-logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px; /* Add spacing below the logo */
+    text-align: center;
+    color: #007bff;
 }
 
 .sidebar ul {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
+    width: 100%; /* Ensure the ul takes the full width */
 }
 
-.sidebar li {
-    padding: 10px;
+.sidebar ul li {
+    width: 100%;
+    margin-bottom: 10px;
 }
 
-.sidebar a {
+.sidebar ul li a {
     text-decoration: none;
-    color: white;
-    display: block;
+    color: black;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
 }
 
-.sidebar .active {
-    background: #007bff;
+.sidebar ul li a .icon {
+    margin-right: 10px; /* Add spacing between icon and text */
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+    background-color: #007bff;
+    color: black;
+}
+
+.separator {
+    width: 80%;
+    height: 1px;
+    background-color: #444;
+    margin: 20px 0; /* Add spacing around the separator */
 }

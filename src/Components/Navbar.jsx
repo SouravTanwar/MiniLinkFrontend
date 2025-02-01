@@ -2,9 +2,10 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../Contexts/AuthContext";
 import { SearchContext } from "../Contexts/SearchContext";
 import { useNavigate } from "react-router-dom";
+import { FaUserCircle, FaPlusCircle, FaSearch } from "react-icons/fa";
 import "../Styles/Navbar.css"; // Using Vanilla CSS
 import { toast } from "react-toastify";
-import CreateEditLinkModal from "../Modals/CreateEditLinkModal"
+import CreateEditLinkModal from "../Modals/CreateEditLinkModal";
 import { createLink } from "../Services/linksService";
 
 const Navbar = () => {
@@ -42,14 +43,14 @@ const Navbar = () => {
     const handleCreateNewLink = async (data) => {
         try {
             await createLink(data);
-            toast.success("link created");
+            toast.success("Link created");
             navigate("/links");
         
         } catch (error) {
             console.log(error)
-            toast.error("link not created!");
+            toast.error("Link not created!");
         }
-    }
+    };
 
     // Logout function
     const handleLogout = () => {
@@ -65,10 +66,11 @@ const Navbar = () => {
             </div>
 
             <div className="navbar-center">
-            <button className="create-btn" onClick={() => setIsModalOpen(true)}>
-                Create New
-            </button>
+                <button className="create-btn" onClick={() => setIsModalOpen(true)}>
+                    <FaPlusCircle /> Create New
+                </button>
                 <form className="search-form">
+                    <FaSearch className="search-icon" />
                     <input
                         type="text"
                         placeholder="Search Remarks..."
@@ -90,11 +92,12 @@ const Navbar = () => {
                     )}
                 </div>
             </div>
+
             <CreateEditLinkModal 
-            isOpen={isModalOpen} 
-            onClose={() => setIsModalOpen(false)} 
-            onSave={(newLinkData) => {handleCreateNewLink(newLinkData)}}
-        />
+                isOpen={isModalOpen} 
+                onClose={() => setIsModalOpen(false)} 
+                onSave={(newLinkData) => {handleCreateNewLink(newLinkData)}}
+            />
         </nav>
     );
 };

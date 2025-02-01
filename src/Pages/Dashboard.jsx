@@ -1,55 +1,120 @@
 import { useEffect, useContext } from "react";
-import { DashboardContext } from "../Contexts/DashboardContext"
+import { DashboardContext } from "../Contexts/DashboardContext";
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import "./Dashboard.css"; 
+
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, ChartDataLabels);
+
 const Dashboard = () => {
     const { totalClicks, dateWiseClicks, deviceClicks, fetchAnalytics } = useContext(DashboardContext);
-    
+
     useEffect(() => {
         fetchAnalytics();
-    }, []);
+    }, [fetchAnalytics]);
+
+
+    const dateWiseData = {
+        labels: dateWiseClicks?.map((item) => item._id),
+        datasets: [
+            {
+                data: dateWiseClicks?.map((item) => item.cumulativeTotal),
+                backgroundColor: "#1B48DA", 
+                borderRadius: 1,
+                barThickness: 12,
+            },
+        ],
+    };
+
+    // Prepare data for Device-wise Clicks Chart
+    const deviceWiseData = {
+        labels: deviceClicks?.map((item) => item.deviceType),
+        datasets: [
+            {
+                data: deviceClicks?.map((item) => item.totalClicks),
+                backgroundColor: "#1B48DA", // Green
+                borderRadius: 1,
+                barThickness: 12, // Slim bar
+            },
+        ],
+    };
+
+    // Chart options for minimal horizontal bar charts:
+    const chartOptions = {
+        animation: { duration: 0 },
+        indexAxis: "y",
+        layout: {
+            padding: {
+                right: 40  // Increase this value as needed for extra space
+            }
+        },
+        scales: {
+            x: {
+                display: false,
+                grid: { display: false }
+            },
+            y: {
+                display: true,
+                grid: { display: false,
+                    drawBorder: false,
+                color: 'transparent' },
+                ticks: {
+                    color: "#333",
+                    font: { size: 14 }
+                }
+            }
+        },
+        plugins: {
+            legend: { display: false },
+            datalabels: {
+                display: true,
+                anchor: "end",
+                align: "end",
+                offset: 10,
+                color: "#000",
+                font: { weight: "bold", size: 16 },
+                formatter: (value) => value,
+                clip: false
+            },
+            tooltip: { enabled: true }
+        },
+        maintainAspectRatio: false
+    };
+
+
+
+
 
     return (
-        <div className="p-6">
-            <h2 className="text-xl font-bold">
-                Total Clicks <span className="text-blue-600">{totalClicks}</span>
+        <div className="dashboard-container">
+            <h2 className="dashboard-title">
+                Total Clicks <span className="highlight-text">{totalClicks}</span>
             </h2>
-
-            <div className="grid grid-cols-2 gap-6 mt-4">
-                {/* Date-wise Clicks */}
-                <div className="border p-4 rounded-lg">
-                    <h3 className="font-semibold">Date-wise Clicks</h3>
-                    {dateWiseClicks?.length > 0 ? (
-                        dateWiseClicks.map(({ _id, cumulativeTotal }) => (
-                                <div
-                                    key={_id}
-                                    className="flex justify-between items-center mt-2"
-                                >
-                                    <span>{_id}</span> 
-                                    
-                                    <span>------ {cumulativeTotal}</span>
-                                </div>
-                            )
-                        )
-                    ) : (
-                        <p className="text-gray-500">No data available</p>
-                    )}
+            <div className="charts-grid">
+                {/* Date-wise Clicks Chart */}
+                <div className="chart-card">
+                    <h3 className="chart-title">Date-wise Clicks</h3>
+                    <div className="chart-container">
+                        {dateWiseClicks?.length > 0 ? (
+                            <Bar data={dateWiseData} options={chartOptions} />
+                        ) : (
+                            <p className="no-data-text">No data available</p>
+                        )}
+                    </div>
                 </div>
-
-                {/* Device-wise Clicks */}
-                <div className="border p-4 rounded-lg">
-                    <h3 className="font-semibold">Click Devices</h3>
-                    {deviceClicks?.length > 0 ? (
-                        deviceClicks.map(({ deviceType, totalClicks }) => ( 
-                            <div key={deviceType} className="flex justify-between items-center mt-2">
-                                <span>{deviceType}</span>
-                                
-                                <span>---------- {totalClicks}</span>
-                            </div>
-                        ))
-                    ) : (
-                        <p className="text-gray-500">No data available</p>
-                    )}
+                {/* Device-wise Clicks Chart */}
+                <div className="chart-card">
+                    <h3 className="chart-title">Device-wise Clicks</h3>
+                    <div className="chart-container">
+                        {deviceClicks?.length > 0 ? (
+                            <Bar data={deviceWiseData} options={chartOptions} />
+                        ) : (
+                            <p className="no-data-text">No data available</p>
+                        )}
+                    </div>
                 </div>
-
             </div>
         </div>
     );

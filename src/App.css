@@ -1,4 +1,4 @@
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -6,44 +6,14 @@
 
 .app-container {
     display: flex;
+    flex-direction: column;
     height: 100vh;
 }
 
-.navbar {
-    height: 60px;
-    background-color: #333;
-    color: white;
+.loader {
     display: flex;
     align-items: center;
-    padding: 0 20px;
-    width: calc(100% - 250px); /* Full width minus the sidebar width */
-    position: fixed;
-    top: 0;
-    left: 250px; /* Adjust for the width of the sidebar */
-    z-index: 1000;
+    justify-content: center;
+    height: 100vh;
 }
 
-.sidebar {
-    width: 250px;
-    background-color: #222;
-    color: white;
-    height: 100vh; /* Full height */
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-.main-section {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    margin-left: 250px; /* Adjust for the width of the sidebar */
-    margin-top: 60px; /* Adjust for the height of the navbar */
-    overflow-y: auto;
-    width: calc(100% - 250px); /* Full width minus the sidebar width */
-}
-
-.main-content {
-    flex-grow: 1;
-    padding: 20px;
-}

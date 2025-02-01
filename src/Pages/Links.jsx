@@ -1,12 +1,13 @@
-import { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { SearchContext } from "../Contexts/SearchContext";
 import { getLinks, deleteLink, updateLink } from "../Services/linksService";
 import { copyToClipboard } from "../Utils/copyToClipboard";
 import { toast } from "react-toastify";
 import CreateEditLinkModal from "../Modals/CreateEditLinkModal";
 import Modal from "../Modals/alertModal";
-import "../Styles/Link.css"
-
+import { useTable, usePagination } from 'react-table';
+import { FaEdit, FaTrash, FaClipboard } from 'react-icons/fa';
+import "../Styles/Link.css";
 
 const Links = () => {
     const [links, setLinks] = useState([]);
@@ -34,18 +35,17 @@ const Links = () => {
     const handleEditLink = async (data) => {
         try {
             await updateLink(selectedLink._id, data);
-            toast.success("link updated");
+            toast.success("Link updated");
             fetchLinks();
         } catch (error) {
             console.log(error)
-            toast.error("link not updated!");
+            toast.error("Link not updated!");
         }
     }
 
     const handleDelete = async () => {
-        
         try {
-            const linkId=selectedLink._id
+            const linkId = selectedLink._id;
             await deleteLink(linkId);
             setLinks((prev) => prev.filter((link) => link._id !== linkId));
             toast.success("Link deleted successfully");
@@ -55,71 +55,130 @@ const Links = () => {
         }
     };
 
-
     const filteredLinks = links.filter((link) =>
         link.remarks.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const columns = React.useMemo(
+        () => [
+            {
+                Header: 'Date',
+                accessor: 'createdAt',
+                Cell: ({ value }) => new Date(value).toLocaleDateString(),
+            },
+            {
+                Header: 'Short Link',
+                accessor: 'shortLink',
+                Cell: ({ value }) => (
+                    <div className="short-link-container">
+                        <span className="short-link">http://localhost:8000/api/v1/links/r/{value}</span>
+                        <button onClick={() => copyToClipboard(value)}><FaClipboard /></button>
+                    </div>
+                ),
+            },
+            {
+                Header: 'Original Link',
+                accessor: 'originalLink',
+            },
+            {
+                Header: 'Remarks',
+                accessor: 'remarks',
+            },
+            {
+                Header: 'Clicks',
+                accessor: 'clicks',
+            },
+            {
+                Header: 'Status',
+                accessor: 'status',
+                Cell: ({ value }) => (
+                    <span className={`status ${value === 'Active' ? 'active' : 'inactive'}`}>{value}</span>
+                ),
+            },
+            {
+                Header: 'Actions',
+                Cell: ({ row }) => (
+                    <div>
+                        <button onClick={() => {
+                            setSelectedLink(row.original);
+                            setIsModalOpen(true);
+                        }}><FaEdit /></button>
+                        <button className="delete-btn" onClick={() => {
+                            setSelectedLink(row.original);
+                            setShowDeleteModal(true);
+                        }}><FaTrash /></button>
+                    </div>
+                ),
+            },
+        ],
+        [selectedLink]
+    );
+
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        prepareRow,
+        page,
+        canPreviousPage,
+        canNextPage,
+        pageOptions,
+        gotoPage,
+        previousPage,
+        nextPage,
+        state: { pageIndex },
+    } = useTable(
+        {
+            columns,
+            data: filteredLinks,
+            initialState: { pageIndex: currentPage - 1 },
+            manualPagination: true,
+            pageCount: totalPages,
+        },
+        usePagination
+    );
+
     return (
         <div className="links-container">
-            <div className="links-header">
-            </div>
-
-            <table className="links-table">
+            <table className="links-table" {...getTableProps()}>
                 <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Short Link</th>
-                        <th>Original Link</th>
-                        <th>Remarks</th>
-                        <th>Clicks</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredLinks.map((link) => (
-                        <tr key={link._id}>
-                            <td>{new Date(link.createdAt).toLocaleDateString()}</td>
-                            <td>
-                                <span className="short-link">http://localhost:8000/api/v1/links/r/{link.shortLink}</span>
-                                <button onClick={() => copyToClipboard(link.shortLink)}>📋</button>
-                            </td>
-                            <td>{link.originalLink}</td>
-                            <td>{link.remarks}</td>
-                            <td>{link.clicks}</td>
-                            <td>{link.status}</td>
-                            <td>
-                                <button onClick={() => {
-                                    setSelectedLink(link);
-                                    setIsModalOpen(true);
-                                }}>✏️</button>
-                                <button className="delete-btn" onClick={() => {
-                                    setSelectedLink(link);
-                                    setShowDeleteModal(true);
-                                    }}>🗑</button>
-                            </td>
+                    {headerGroups.map(headerGroup => (
+                        <tr {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map(column => (
+                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                            ))}
                         </tr>
                     ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                    {page.map(row => {
+                        prepareRow(row);
+                        return (
+                            <tr {...row.getRowProps()}>
+                                {row.cells.map(cell => (
+                                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                ))}
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </table>
 
-            {/* Pagination Controls */}
             <div className="pagination">
-                <button
-                    disabled={currentPage === 1}
-                    onClick={() => setCurrentPage((prev) => prev - 1)}
-                >
+                <button onClick={() => previousPage()} disabled={!canPreviousPage}>
                     Previous
                 </button>
-                <span>Page {currentPage} of {totalPages}</span>
-                <button
-                    disabled={currentPage === totalPages}
-                    onClick={() => setCurrentPage((prev) => prev + 1)}
-                >
+                <span>
+                    Page{' '}
+                    <strong>
+                        {pageIndex + 1} of {pageOptions.length}
+                    </strong>
+                </span>
+                <button onClick={() => nextPage()} disabled={!canNextPage}>
                     Next
                 </button>
             </div>
+
             {isModalOpen && (
                 <CreateEditLinkModal 
                     isOpen={isModalOpen}
@@ -130,7 +189,7 @@ const Links = () => {
             )}
             {showDeleteModal && (
                 <Modal
-                    message="Are you sure, you want to remove it"
+                    message="Are you sure you want to delete this link?"
                     onConfirm={handleDelete}
                     onCancel={() => setShowDeleteModal(false)}
                     isDelete={true}

@@ -1,0 +1,54 @@
+/* Link.css */
+.links-container {
+    padding: 20px;
+}
+
+.links-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.links-table th,
+.links-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.links-table th {
+    background-color: #f2f2f2;
+}
+
+.links-table .short-link {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.links-table .status.active {
+    color: green;
+}
+
+.links-table .status.inactive {
+    color: yellow;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.pagination button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}

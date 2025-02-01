@@ -5,6 +5,7 @@ import { updateUser, deleteUser } from "../Services/settingService";
 import Modal from "../Modals/alertModal";
 import { toast } from "react-toastify";
 import { validateEmail,validateName , validatePhone } from "../Utils/validation";
+import "./Settings.css"; // Import the CSS file
 
 const Settings = () => {
     const { user } = useContext(AuthContext); // Get user & logout from context
@@ -55,9 +56,9 @@ const Settings = () => {
         }
     };
 
+    
     return (
         <div className="settings-container">
-            <h2>Settings</h2>
             <div className="form-group">
                 <label>Name:</label>
                 <input type="text" name="name" value={formData.name} onChange={handleChange} />
@@ -67,12 +68,12 @@ const Settings = () => {
                 <input type="email" name="email" value={formData.email} onChange={handleChange} />
             </div>
             <div className="form-group">
-                <label>mobile:</label>
+                <label>Mobile:</label>
                 <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
             </div>
-            <button onClick={handleCheckSave}>Save Changes</button>
+            <button className="save-button" onClick={handleCheckSave}>Save Changes</button>
             <button className="delete-btn" onClick={() => setShowDeleteModal(true)}>Delete Account</button>
-
+    
             {/* Update Confirmation Modal */}
             {showUpdateModal && (
                 <Modal
@@ -82,7 +83,7 @@ const Settings = () => {
                     isDelete={false}
                 />
             )}
-
+    
             {/* Delete Confirmation Modal */}
             {showDeleteModal && (
                 <Modal
@@ -94,6 +95,10 @@ const Settings = () => {
             )}
         </div>
     );
+    
+
+    
+
 };
 
 export default Settings;

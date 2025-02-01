@@ -1,0 +1,62 @@
+/* Dashboard Container */
+.dashboard-container {
+    padding: 24px;
+}
+
+/* Title Styling */
+.dashboard-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.highlight-text {
+    color: #2563eb;
+    /* Blue color */
+}
+
+/* Grid Layout for Charts */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+/* Chart Card Styling */
+.chart-card {
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 8px;
+    background: #fff;
+}
+
+/* Chart Title */
+.chart-title {
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* Chart Container */
+.chart-container {
+    width: 100%;
+    height: 250px;
+    /* Adjust as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+}
+
+/* No Data Text */
+.no-data-text {
+    color: #6b7280;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Responsive Layout: Single column on small screens */
+@media (max-width: 768px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}

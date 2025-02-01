@@ -1,13 +1,17 @@
-/* Signup.css */
-.signup-page {
+/* Login.css */
+.login-page {
     display: flex;
     height: 100vh;
     overflow: hidden;
 }
 
-.signup-left {
-    flex: 1;
-    background-image: url('path-to-your-background-image.jpg'); /* Set the path to your background image */
+.login-left, .login-right {
+    flex: 1; /* Ensure both sides take equal space */
+    height: 100%;
+}
+
+.login-left {
+    background-image: url('/Cover.png'); /* Set the path to your background image */
     background-size: cover;
     background-position: center;
     display: flex;
@@ -15,15 +19,14 @@
     justify-content: center;
 }
 
-.signup-logo {
+.login-logo {
     font-size: 36px;
     color: white;
     font-weight: bold;
     text-align: center;
 }
 
-.signup-right {
-    flex: 1;
+.login-right {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,14 +35,14 @@
     background-color: #f9f9f9;
 }
 
-.signup-header {
+.login-header {
     display: flex;
     justify-content: flex-end;
     width: 100%;
     margin-bottom: 20px;
 }
 
-.signup-nav-btn {
+.login-nav-btn {
     background: none;
     border: none;
     font-size: 16px;
@@ -48,34 +51,34 @@
     cursor: pointer;
 }
 
-.signup-nav-btn.active {
+.login-nav-btn.active {
     font-weight: bold;
     color: #0056b3;
 }
 
-.signup-container {
-    max-width: 400px;
-    width: 100%;
+.login-container {
+    max-width: 500px; /* Increased width */
+    width: 100%; /* Ensure it takes full width within its container */
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 30px; /* Adjusted padding for better spacing */
 }
 
-.signup-title {
+.login-title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
     text-align: center;
 }
 
-.signup-form {
+.login-form {
     display: flex;
     flex-direction: column;
 }
 
-.signup-input {
+.login-input {
     margin-bottom: 15px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -83,7 +86,7 @@
     font-size: 16px;
 }
 
-.signup-button {
+.login-button {
     padding: 10px;
     border: none;
     border-radius: 4px;
@@ -93,25 +96,25 @@
     cursor: pointer;
 }
 
-.signup-button:hover {
+.login-button:hover {
     background-color: #0056b3;
 }
 
-.signup-error {
+.login-error {
     color: red;
     font-size: 14px;
     margin-top: 10px;
     text-align: center;
 }
 
-.signup-login-link {
+.login-signup-link {
     margin-top: 20px;
     text-align: center;
     font-size: 14px;
     color: #007bff;
 }
 
-.signup-login-link span {
+.login-signup-link span {
     cursor: pointer;
     text-decoration: underline;
 }
