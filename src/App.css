@@ -1,4 +1,12 @@
+:root {
+    --background-color: #1B48DA;
+    --text-color: #3B3C51;
+    --placeholder-color: #B3B3B3;
+}
+
+
 * {
+    font-family: 'Manrope', sans-serif;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
