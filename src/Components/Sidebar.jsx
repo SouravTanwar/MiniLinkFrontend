@@ -1,36 +1,36 @@
 import { NavLink } from "react-router-dom";
-import { FaTachometerAlt, FaLink, FaChartLine, FaCog } from "react-icons/fa";
 import "./Sidebar.css";
 
 const Sidebar = () => {
     return (
         <aside className="sidebar">
-            <div className="sidebar-logo"><img src="/Logo.png"/></div>
+            <div className="sidebar-logo">
+                <img src="/Logo.png" alt="Logo" />
+            </div>
             <ul className="tabs">
                 <li>
-                    <NavLink to="/dashboard" activeClassName="active">
-                        <FaTachometerAlt className="icon" />
+                    <NavLink to="/dashboard" className={({ isActive }) => (isActive ? "active" : "")}>
+                        <img src="/Dashboard.svg" alt="Dashboard Icon" className="icon" />
                         Dashboard
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/links" activeClassName="active">
-                        <FaLink className="icon" />
+                    <NavLink to="/links" className={({ isActive }) => (isActive ? "active" : "")}>
+                        <img src="/links.svg" alt="Links Icon" className="icon" />
                         Links
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/analytics" activeClassName="active">
-                        <FaChartLine className="icon" />
+                    <NavLink to="/analytics" className={({ isActive }) => (isActive ? "active" : "")}>
+                        <img src="/analytics.svg" alt="Analytics Icon" className="icon" />
                         Analytics
                     </NavLink>
                 </li>
             </ul>
-            <div className="separator"></div>
-            <ul>
+            <ul className="setting-tab">
                 <li>
-                    <NavLink to="/settings" activeClassName="active">
-                        <FaCog className="icon" />
+                    <NavLink to="/settings" className={({ isActive }) => (isActive ? "active" : "")}>
+                        <img src="/Settings.svg" alt="Settings Icon" className="icon" />
                         Settings
                     </NavLink>
                 </li>

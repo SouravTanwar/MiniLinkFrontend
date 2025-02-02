@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import CreateEditLinkModal from "../Modals/CreateEditLinkModal";
 import Modal from "../Modals/alertModal";
 import { useTable, usePagination } from "react-table";
-import "./Link.css";
+import "./Links.css";
 
 const Links = () => {
     const [links, setLinks] = useState([]);

@@ -62,8 +62,8 @@ const Dashboard = () => {
                 color: 'transparent' },
                 ticks: {
                     color: "#333",
-                    font: { size: 14 }
-                }
+                    font: { weight: "bold", size: 16 }
+                }, 
             }
         },
         plugins: {
@@ -106,7 +106,7 @@ const Dashboard = () => {
                 </div>
                 {/* Device-wise Clicks Chart */}
                 <div className="chart-card">
-                    <h3 className="chart-title">Device-wise Clicks</h3>
+                    <h3 className="chart-title">Click Devices</h3>
                     <div className="chart-container">
                         {deviceClicks?.length > 0 ? (
                             <Bar data={deviceWiseData} options={chartOptions} />

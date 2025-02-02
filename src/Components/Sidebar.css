@@ -1,8 +1,7 @@
 .sidebar {
     width: 250px;
     height: 100vh;
-    background-color: #ffff;
-    color: black;
+    background-color: #FFFFFF;
     position: fixed;
     top: 0;
     left: 0;
@@ -10,55 +9,79 @@
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
-    border:#a9a9ad ;
+    border-right: 1px solid #ECECF2;
 }
 
-.sidebar-logo {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 30px; 
-    text-align: center;
-    color: #007bff;
-}
-
-.tabs{
-    margin-top: 25%;
+.tabs {
+    margin-top: 20%;
 }
 
 .sidebar ul {
     list-style-type: none;
     padding: 0;
-    width: 100%; 
+    width: 90%;
 }
 
 .sidebar ul li {
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 2px;
+}
+
+.icon{
+    padding-right: 10px;
 }
 
 .sidebar ul li a {
     text-decoration: none;
-    color: black;
     display: flex;
     align-items: center;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 4px;
-}
-
-.sidebar ul li a .icon {
-    margin-right: 10px;
+    padding: 15px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    color: var(--text-color); 
+    transition: color 0.3s ease;
 }
 
 .sidebar ul li a:hover,
 .sidebar ul li a.active {
-    background-color: #007bff;
-    color: black;
+    background-color: #EFF6FF;
+    color: var(--background-color); 
 }
 
-.separator {
-    width: 80%;
-    height: 1px;
-    background-color: #444;
-    margin: 20px 0; 
+
+
+.sidebar ul li a .icon {
+    filter: brightness(0) saturate(100%); 
+    transition: filter 0.3s ease;
+}
+
+.sidebar ul li a:hover .icon,
+.sidebar ul li a.active .icon {
+    filter: invert(20%) sepia(100%) saturate(3000%) hue-rotate(180deg) brightness(78%) contrast(252%);
+}
+
+
+.setting-tab li {
+    margin-top: 10px;
+    padding: 10px 0;
+    position: relative;
+}
+
+.setting-tab li::before,
+.setting-tab li::after {
+    content: "";
+    position: absolute;
+    left: -10%;
+    width: 116%;
+    height: 2px;
+    background-color: #F6F6F9;
+}
+
+.setting-tab li::before {
+    top: 0;
+}
+
+.setting-tab li::after {
+    bottom: 0;
 }

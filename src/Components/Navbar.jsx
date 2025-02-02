@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../Contexts/AuthContext";
 import { SearchContext } from "../Contexts/SearchContext";
 import { useNavigate } from "react-router-dom";
-import { FaUserCircle, FaPlusCircle, FaSearch } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import "./Navbar.css"; 
 import { toast } from "react-toastify";
 import CreateEditLinkModal from "../Modals/CreateEditLinkModal";
@@ -66,21 +66,22 @@ const Navbar = () => {
             </div>
 
             <div className="navbar-center">
+                
+            </div>
+
+            <div className="navbar-right">
                 <button className="create-btn" onClick={() => setIsModalOpen(true)}>
-                    <FaPlusCircle /> Create New
+                    <span className="create-icon">+</span> Create New
                 </button>
                 <form className="search-form">
                     <FaSearch className="search-icon" />
                     <input
                         type="text"
-                        placeholder="Search Remarks..."
+                        placeholder="Search by remarks"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
                 </form>
-            </div>
-
-            <div className="navbar-right">
                 <div className="user-dropdown" onClick={() => setDropdownOpen(!dropdownOpen)}>
                     <span className="user-initials">
                         {user?.name ? user.name.slice(0, 2).toUpperCase() : "U"}
