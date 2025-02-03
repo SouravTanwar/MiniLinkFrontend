@@ -65,7 +65,17 @@ const Links = () => {
             {
                 Header: "Date",
                 accessor: "createdAt",
-                Cell: ({ value }) => new Date(value).toLocaleDateString(),
+                Cell: ({ value }) => {
+                    const date = new Date(value);
+                    return date.toLocaleString('en-US', { 
+                        month: 'short', 
+                        day: '2-digit', 
+                        year: 'numeric', 
+                        hour: '2-digit', 
+                        minute: '2-digit', 
+                        hour12: false 
+                    });
+                }
             },
             {
                 Header: "Original Link",
@@ -79,8 +89,10 @@ const Links = () => {
                         <span className="short-link">
                         https://minilinkbackend.onrender.com/api/v1/links/r/{value}
                         </span>
-                        <button onClick={() => copyToClipboard(value)}>
-                            📋
+                        <button className="copy-btn" onClick={() => copyToClipboard(value)}>
+                        <span class="material-symbols-outlined">
+                        content_copy
+                        </span>                     
                         </button>
                     </div>
                 ),
@@ -113,7 +125,9 @@ const Links = () => {
                                 setIsModalOpen(true);
                             }}
                         >
-                            📝
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
                         </button>
                         <button
                             className="delete-btn"
@@ -122,7 +136,9 @@ const Links = () => {
                                 setShowDeleteModal(true);
                             }}
                         >
-                            🗑️
+                            <span class="material-symbols-outlined">
+                            delete
+                            </span>
                         </button>
                     </div>
                 ),

@@ -44,7 +44,17 @@ const Analytics = () => {
                     <tbody>
                         {analytics.map((entry) => (
                             <tr key={entry._id}>
-                                <td>{new Date(entry.createdAt).toLocaleDateString()}</td>
+                                <td>
+                                {new Date(entry.createdAt).toLocaleString('en-US', {
+                                    month: 'short',
+                                    day: '2-digit',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false
+                                })}
+                                </td>
+
                                 <td>{entry.originalLink}</td>
                                 <td>https://minilinkbackend.onrender.com/api/v1/links/r/{entry.shortLink}</td>
                                 <td>{entry.ipAddress}</td>
@@ -55,7 +65,7 @@ const Analytics = () => {
                 </table>
             )}
 
-            {/* Pagination Controls */}
+
             <div className="pagination">
                 <button disabled={currentPage === 1} onClick={() => setCurrentPage(prev => prev - 1)}>Previous</button>
                 <span> Page {currentPage} of {totalPages} </span>
