@@ -15,14 +15,18 @@ const Links = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedLink, setSelectedLink] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const fetchLinks = async (page) => {
         try {
+            setLoading(true);
             const data = await getLinks(page);
             setLinks(data.docs);
             setTotalPages(data.totalPages);
         } catch (error) {
             toast.error("Failed to fetch links");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -151,7 +155,8 @@ const Links = () => {
 
     return (
         <div className="links-container">
-            <table className="links-table" {...getTableProps()}>
+
+            {loading ? <p>Loading...</p> : (<table className="links-table" {...getTableProps()}>
                 <thead>
                     {headerGroups.map((headerGroup) => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
@@ -173,7 +178,7 @@ const Links = () => {
                         );
                     })}
                 </tbody>
-            </table>
+            </table>)}
 
             <div className="pagination">
                 <button

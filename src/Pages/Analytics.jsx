@@ -29,15 +29,14 @@ const Analytics = () => {
 
     return (
         <div className="analytics-container">
-            <h2>Analytics</h2>
 
             {loading ? <p>Loading...</p> : (
                 <table>
                     <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Short Link</th>
                             <th>Original Link</th>
+                            <th>Short Link</th>
                             <th>IP</th>
                             <th>Device</th>
                         </tr>
@@ -46,8 +45,8 @@ const Analytics = () => {
                         {analytics.map((entry) => (
                             <tr key={entry._id}>
                                 <td>{new Date(entry.createdAt).toLocaleDateString()}</td>
-                                <td>{entry.shortLink}</td>
                                 <td>{entry.originalLink}</td>
+                                <td>https://minilinkbackend.onrender.com/api/v1/links/r/{entry.shortLink}</td>
                                 <td>{entry.ipAddress}</td>
                                 <td>{entry.userAgent}</td>
                             </tr>

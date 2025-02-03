@@ -25,7 +25,7 @@
     font-size: 16px;
 }
 
-button {
+.settings-container button {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -37,11 +37,11 @@ button {
     text-align: center;
 }
 
-button:focus {
+.settings-container button:focus {
     outline: none;
 }
 
-button:active {
+.settings-container button:active {
     transform: scale(0.98);
 }
 
