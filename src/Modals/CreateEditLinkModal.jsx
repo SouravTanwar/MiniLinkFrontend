@@ -64,7 +64,7 @@ const CreateEditLinkModal = ({ isOpen, onClose, onSave, linkData }) => {
             <div className="modal-container">
                 <div className="modal-header">
                     <h2>{linkData ? "Edit Link" : "New Link"}</h2>
-                    <button className="cancel-btn" onClick={onClose}>X</button>
+                    <button className="cancel-bttn" onClick={onClose}>X</button>
                 </div>
                 <div className="modal-body">
                     <label>Destination Url <span className="required">*</span></label>
