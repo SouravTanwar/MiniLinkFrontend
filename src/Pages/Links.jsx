@@ -217,7 +217,6 @@ const Links = () => {
                     message="Are you sure, you want to remove it?"
                     onConfirm={handleDelete}
                     onCancel={() => setShowDeleteModal(false)}
-                    isDelete={true}
                 />
             )}
         </div>

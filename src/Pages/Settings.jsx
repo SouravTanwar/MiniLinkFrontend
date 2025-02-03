@@ -4,33 +4,45 @@ import { AuthContext } from "../Contexts/AuthContext";
 import { updateUser, deleteUser } from "../Services/settingService";
 import Modal from "../Modals/alertModal";
 import { toast } from "react-toastify";
-import { validateEmail,validateName , validatePhone } from "../Utils/validation";
+import { validateEmail, validateName, validatePhone } from "../Utils/validation";
 import "./Settings.css"; 
 
 const Settings = () => {
     const { user } = useContext(AuthContext); 
-    const navigate = useNavigate()
-    const [formData, setFormData] = useState({
+    const navigate = useNavigate();
+
+    const initialFormData = {
         name: user?.name || "",
         email: user?.email || "",
         phoneNumber: user?.phoneNumber || "",
-    });
+    };
+
+    const [formData, setFormData] = useState(initialFormData);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
-
+    const [isChanged, setIsChanged] = useState(false);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData((prevFormData) => {
+            const newFormData = { ...prevFormData, [name]: value };
+            setIsChanged(JSON.stringify(newFormData) !== JSON.stringify(initialFormData));
+            return newFormData;
+        });
     };
 
     const handleCheckSave = async () => {
+        if (!isChanged) {
+            toast.error("No changes to save.");
+            return;
+        }
+
         if (!validateName(formData.name) || !validateEmail(formData.email) || !validatePhone(formData.phoneNumber)) {
             toast.error("Invalid input fields");
             return;
         }
-        setShowUpdateModal(true)
-    }
-
+        setShowUpdateModal(true);
+    };
 
     const handleUpdate = async () => {
         try {
@@ -40,7 +52,7 @@ const Settings = () => {
             navigate("/login");
             
         } catch (error) {
-            console.log(error)
+            console.log(error);
             toast.error("Update failed!");
         }
     };
@@ -56,49 +68,42 @@ const Settings = () => {
         }
     };
 
-    
     return (
         <div className="settings-container">
             <div className="form-group">
-                <label>Name:</label>
+                <label>Name</label>
                 <input type="text" name="name" value={formData.name} onChange={handleChange} />
             </div>
             <div className="form-group">
-                <label>Email:</label>
+                <label>Email id</label>
                 <input type="email" name="email" value={formData.email} onChange={handleChange} />
             </div>
             <div className="form-group">
-                <label>Mobile:</label>
+                <label>Mobile no.</label>
                 <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
             </div>
-            <button className="save-button" onClick={handleCheckSave}>Save Changes</button>
-            <button className="delete-button" onClick={() => setShowDeleteModal(true)}>Delete Account</button>
-    
-            {/* Update Confirmation Modal */}
+            <div className="settings-buttons">
+                <button className="save-button" onClick={handleCheckSave}>Save Changes</button>
+                <button className="delete-button" onClick={() => setShowDeleteModal(true)}>Delete Account</button>
+            </div>
+
             {showUpdateModal && (
                 <Modal
                     message="Are you sure you want to update your details?"
                     onConfirm={handleUpdate}
                     onCancel={() => setShowUpdateModal(false)}
-                    isDelete={false}
                 />
             )}
-    
-            {/* Delete Confirmation Modal */}
+
             {showDeleteModal && (
                 <Modal
                     message="Are you sure you want to delete the account?"
                     onConfirm={handleDelete}
                     onCancel={() => setShowDeleteModal(false)}
-                    isDelete={true}
                 />
             )}
         </div>
     );
-    
-
-    
-
 };
 
 export default Settings;

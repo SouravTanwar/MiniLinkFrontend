@@ -1,8 +1,8 @@
 .settings-container {
     padding: 20px;
     background-color: #fff;
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 500px;
+    margin: 60px auto;
 }
 
 .form-group {
@@ -12,45 +12,47 @@
 }
 
 .form-group label {
-    font-weight: bold;
-    margin-right: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 5px;
     min-width: 100px;
+    color: #181820;
 }
 
 .form-group input {
     flex: 1;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
+    border: 1px solid #ECECF2;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-color);
 }
 
-.settings-container button {
+.settings-buttons{
+    margin-top: 75px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.settings-buttons button {
     padding: 10px 20px;
     border: none;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 6px;
+    font-size: 14px;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     display: block;
     width: 100%;
     text-align: center;
-}
-
-.settings-container button:focus {
-    outline: none;
-}
-
-.settings-container button:active {
-    transform: scale(0.98);
+    color: #FFFFFF;
 }
 
 .save-button {
-    background-color: #007bff;
-    color: #fff;
+    background-color: var(--background-color);
 }
 
 .delete-button {
-    background-color: #dc3545;
-    color: #fff;
+    background-color: #EB0D0D;
 }
