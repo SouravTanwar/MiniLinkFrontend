@@ -46,6 +46,8 @@
     color: var(--text-color);
     margin-left: 20px;
     cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 6px;
 }
 
 .auth-nav-btn.active {

@@ -10,6 +10,7 @@ import {
     confirmPasswordMatch,
 } from "../Utils/validation";
 import "./AuthForm.css";
+import Spinner from "../Components/Spinner"; // Import the Spinner component
 
 const AuthForm = ({ isSignup }) => {
     const { signup, login } = useContext(AuthContext);
@@ -21,6 +22,7 @@ const AuthForm = ({ isSignup }) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [error, setError] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -48,6 +50,7 @@ const AuthForm = ({ isSignup }) => {
         setError(errors);
         if (Object.keys(errors).length > 0) return;
 
+        setLoading(true);
         try {
             if (isSignup) {
                 await signup(name, email, password, phoneNumber);
@@ -58,6 +61,8 @@ const AuthForm = ({ isSignup }) => {
             }
         } catch (err) {
             toast.error(err.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -143,8 +148,8 @@ const AuthForm = ({ isSignup }) => {
                             </>
                         )}
 
-                        <button type="submit" className="auth-button">
-                            {isSignup ? "Register" : "Login"}
+                        <button type="submit" className="auth-button" disabled={loading}>
+                            {loading ? <Spinner /> : isSignup ? "Register" : "Login"}
                         </button>
                     </form>
                     <p className="auth-toggle-link">

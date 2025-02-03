@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
             setUser(data.user);
             toast.success("Login successful!");
         } catch (error) {
-            toast.error("Login failed!");
+            toast.error("Invalid Credentials");
         }
     };
 
