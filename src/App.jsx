@@ -28,7 +28,7 @@ const App = () => {
     const { user, loading } = useContext(AuthContext);
 
     if (loading) {
-        return <div className="loader">Loading...</div>;
+        return <div className="loader">Loading...<div>It may take upto 50 sec initially</div></div>;
     }
 
     return (

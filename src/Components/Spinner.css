@@ -22,24 +22,6 @@
     animation-delay: -1s;
 }
 
-/* Updated pagination button styles */
-.pagination-container li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: all 0.3s ease-in-out;
-}
-
-.pagination-container li.disabled-btn {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
 @keyframes bounce {
     0%, 100% {
         transform: scale(0);

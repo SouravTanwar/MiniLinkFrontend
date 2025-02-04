@@ -10,7 +10,7 @@ import {
     confirmPasswordMatch,
 } from "../Utils/validation";
 import "./AuthForm.css";
-import Spinner from "../Components/Spinner"; // Import the Spinner component
+import Spinner from "../Components/Spinner"; 
 
 const AuthForm = ({ isSignup }) => {
     const { signup, login } = useContext(AuthContext);
