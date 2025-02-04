@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import DataTable from "react-data-table-component";
 import { getAnalyticsData } from "../Services/analyticsService";
 import { toast } from "react-toastify";
-import "./Analytics.css"
+import "./Analytics.css";
 
 const Analytics = () => {
     const [analytics, setAnalytics] = useState([]);
@@ -10,67 +11,110 @@ const Analytics = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetchAnalytics();
+        fetchAnalytics(currentPage);
     }, [currentPage]);
 
-    const fetchAnalytics = async () => {
+    const fetchAnalytics = async (page) => {
         try {
             setLoading(true);
-            const  data  = await getAnalyticsData(currentPage)
+            const data = await getAnalyticsData(page);
             setAnalytics(data.docs);
-            setTotalPages(data.totalPages); 
+            setTotalPages(data.totalPages);
         } catch (error) {
-            console.log(error)
+            console.log(error);
             toast.error("Failed to fetch analytics data");
         } finally {
             setLoading(false);
         }
     };
 
+    const columns = [
+        {
+            name: "Timestamp",
+            selector: (row) => {
+                const date = new Date(row.createdAt);
+                return date.toLocaleString("en-US", {
+                    month: "short",
+                    day: "2-digit",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                });
+            },
+            sortable: true,
+            style: {
+                Width: "140px", 
+            },
+        },
+        {
+            name: "Original Link",
+            selector: (row) => row.originalLink,
+            sortable: false,
+
+            cell: (row) => (
+                <div className="fade-text">{row.originalLink}</div>
+            ),
+        },
+        {
+            name: "Short Link",
+            selector: (row) => `https://minilinkbackend.onrender.com/api/v1/links/r/${row.shortLink}`,
+            sortable: false,
+
+            cell: (row) => (
+                <div className="fade-text">{`https://minilinkbackend.onrender.com/api/v1/links/r/${row.shortLink}`}</div>
+            ),
+        },
+        {
+            name: "IP Address",
+            selector: (row) => row.ipAddress,
+            sortable: false,
+            style: {
+                minWidth: "150px", 
+            },
+        },
+        {
+            name: "User Device",
+            selector: (row) => row.userAgent,
+            sortable: false,
+        },
+    ];
+    
+
     return (
         <div className="analytics-container">
-
-            {loading ? <p>Loading...</p> : (
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Original Link</th>
-                            <th>Short Link</th>
-                            <th>IP</th>
-                            <th>Device</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {analytics.map((entry) => (
-                            <tr key={entry._id}>
-                                <td>
-                                {new Date(entry.createdAt).toLocaleString('en-US', {
-                                    month: 'short',
-                                    day: '2-digit',
-                                    year: 'numeric',
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    hour12: false
-                                })}
-                                </td>
-
-                                <td>{entry.originalLink}</td>
-                                <td>https://minilinkbackend.onrender.com/api/v1/links/r/{entry.shortLink}</td>
-                                <td>{entry.ipAddress}</td>
-                                <td>{entry.userAgent}</td>
-                            </tr>
+            <DataTable
+                columns={columns}
+                data={analytics}
+                progressPending={loading}
+                pagination
+                paginationPerPage={10}
+                paginationComponent={() => (
+                    <div className="pagination">
+                        <button
+                            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                        >
+                            &lt;
+                        </button>
+                        {[...Array(totalPages)].map((_, index) => (
+                            <button
+                                key={index + 1}
+                                onClick={() => setCurrentPage(index + 1)}
+                                className={currentPage === index + 1 ? "active" : ""}
+                            >
+                                {index + 1}
+                            </button>
                         ))}
-                    </tbody>
-                </table>
-            )}
-
-
-            <div className="pagination">
-                <button disabled={currentPage === 1} onClick={() => setCurrentPage(prev => prev - 1)}>Previous</button>
-                <span> Page {currentPage} of {totalPages} </span>
-                <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(prev => prev + 1)}>Next</button>
-            </div>
+                        <button
+                            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                        >
+                            &gt;
+                        </button>
+                    </div>
+                )}
+            />
         </div>
     );
 };
