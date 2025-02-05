@@ -1,4 +1,3 @@
-
 .navbar {
     height: 75px;
     background-color: #FFFFFF;
@@ -128,4 +127,39 @@
     width: 100%;
     text-align: left;
     cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 25px;
+        width: 100%;
+        z-index: 99;
+    }
+
+    .navbar-left{
+        display: none;
+    }
+
+    .create-btn{
+        font-size: 12px !important;
+        margin: 0px 7px !important;
+        padding: 5px !important;
+    }
+
+    .create-icon{
+        font-size: 20px !important;
+        margin-right: 5px !important;
+    }
+
+    .search-form{
+        padding: 5px !important;
+    }
+
+    .search-form input{
+        width: 115px !important;
+        font-size: 12px !important;
+    }
+
 }

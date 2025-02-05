@@ -2,6 +2,7 @@ import { useEffect, useContext } from "react";
 import { DashboardContext } from "../Contexts/DashboardContext";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip } from "chart.js";
+import { format } from "date-fns";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import "./Dashboard.css"; 
 
@@ -17,7 +18,7 @@ const Dashboard = () => {
 
 
     const dateWiseData = {
-        labels: dateWiseClicks?.map((item) => item._id),
+        labels: dateWiseClicks?.map((item) => format(new Date(item._id), "dd-MM-yy")),
         datasets: [
             {
                 data: dateWiseClicks?.map((item) => item.cumulativeTotal),
@@ -93,7 +94,6 @@ const Dashboard = () => {
                 Total Clicks <span className="highlight-text">{totalClicks}</span>
             </h2>
             <div className="charts-grid">
-                {/* Date-wise Clicks Chart */}
                 <div className="chart-card">
                     <h3 className="chart-title">Date-wise Clicks</h3>
                     <div className="chart-container">
@@ -104,7 +104,6 @@ const Dashboard = () => {
                         )}
                     </div>
                 </div>
-                {/* Device-wise Clicks Chart */}
                 <div className="chart-card">
                     <h3 className="chart-title">Click Devices</h3>
                     <div className="chart-container">

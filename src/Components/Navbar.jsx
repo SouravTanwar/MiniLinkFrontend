@@ -64,11 +64,6 @@ const Navbar = () => {
                 <h2>{timeGreeting}, {user?.name || "User"}</h2>
                 <p>{date}</p>
             </div>
-
-            <div className="navbar-center">
-                
-            </div>
-
             <div className="navbar-right">
                 <button className="create-btn" onClick={() => setIsModalOpen(true)}>
                     <span className="create-icon">+</span> Create New

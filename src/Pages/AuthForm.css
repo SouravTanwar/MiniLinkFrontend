@@ -15,6 +15,22 @@
     position: relative;
 }
 
+@media (max-width: 768px){
+    .auth-left{
+        display: none;
+    }
+    .mobile-logo{
+        display: block !important;
+        position: absolute;
+        top: 20px;
+        left: 20px
+    }
+    .mobile-logo img{
+        height: 50px;
+        width: 50px;
+    }
+}
+
 .auth-logo {
     position: absolute;
     top: 30px;
@@ -29,6 +45,10 @@
     justify-content: center;
     background-color: #FFFFFF;
     position: relative;
+}
+
+.mobile-logo {
+    display: none;
 }
 
 .auth-header {

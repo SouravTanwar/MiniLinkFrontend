@@ -74,6 +74,9 @@ const AuthForm = ({ isSignup }) => {
                 </div>
             </div>
             <div className="auth-right">
+                <div className="mobile-logo">
+                    <img src="/short-logo.png" alt="Logo" />
+                </div>
                 <div className="auth-header">
                     <button
                         className={`auth-nav-btn ${isSignup ? "active" : ""}`}

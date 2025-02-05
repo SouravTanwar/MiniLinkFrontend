@@ -10,6 +10,23 @@
     align-items: center;
     padding: 20px 0;
     border-right: 1px solid #ECECF2;
+    transition: transform 0.3s ease-in-out;
+    z-index: 100;
+}
+
+.menu-btn {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.menu-btn-img {
+    width: 30px;
 }
 
 .tabs {
@@ -84,4 +101,21 @@
 
 .setting-tab li::after {
     bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 220px;
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-btn {
+        display: block;
+    }
 }
