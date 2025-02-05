@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import CreateEditLinkModal from "../Modals/CreateEditLinkModal";
 import Modal from "../Modals/alertModal";
 import "./Links.css";
-import Navbar from "../Components/Navbar";
 
 const Links = () => {
     const [links, setLinks] = useState([]);
@@ -18,11 +17,10 @@ const Links = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedLink, setSelectedLink] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
         fetchLinks(currentPage);
-    }, [currentPage,refresh]);
+    }, [currentPage]);
 
     const fetchLinks = async (page) => {
         try {
@@ -148,8 +146,6 @@ const Links = () => {
     ];
 
     return (
-        <>
-        <Navbar onLinkCreated={() => setRefresh(prev => !prev)} />
         <div className="links-container">
             <DataTable
                 columns={columns}
@@ -200,7 +196,6 @@ const Links = () => {
                 />
             )}
         </div>
-        </>
     );
 };
 

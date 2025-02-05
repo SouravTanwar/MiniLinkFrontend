@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import CreateEditLinkModal from "../Modals/CreateEditLinkModal";
 import { createLink } from "../Services/linksService";
 
-const Navbar = ({ onLinkCreated }) => {
+const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
     const { searchTerm, setSearchTerm } = useContext(SearchContext);
     const navigate = useNavigate();
@@ -44,7 +44,6 @@ const Navbar = ({ onLinkCreated }) => {
         try {
             await createLink(data);
             toast.success("Link created");
-            onLinkCreated(); 
             navigate("/links");
         
         } catch (error) {
