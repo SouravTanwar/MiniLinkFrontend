@@ -46,10 +46,14 @@ const Settings = () => {
 
     const handleUpdate = async () => {
         try {
+            const emailChanged = formData.email !== initialFormData.email;
             await updateUser(formData); 
-            toast.success("Profile updated successfully! Please Login Again");
+            toast.success("Profile updated successfully!");
             setShowUpdateModal(false); 
-            navigate("/login");
+            if (emailChanged) { 
+                toast.info("Email updated! Please log in again.");
+                navigate("/login"); 
+            }
             
         } catch (error) {
             console.log(error);
