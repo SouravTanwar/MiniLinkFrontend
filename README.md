@@ -13,6 +13,10 @@ To test the application, you can use the following demo credentials:
 - **Email:** demo@demo.com
 - **Password:** Demo123
 
+## Important Note
+
+> **Cookies Must Be Enabled:** MiniLink uses cookies to store authentication tokens and manage requests. If cookies are disabled in your browser, Post login, authentication will not work. Please ensure cookies are enabled for a smooth experience.
+
 ## Features
 
 - **User Authentication:** Secure user authentication with JWT tokens.
@@ -21,6 +25,7 @@ To test the application, you can use the following demo credentials:
 - **Link Analytics:** Track the number of clicks and view link analytics.
 - **Responsive Design:** Optimized for both desktop and mobile devices.
 - **Error Handling:** Comprehensive error handling and user feedback.
+
 
 ## Setup Instructions
 
@@ -37,3 +42,13 @@ Follow these instructions to set up and run the project locally.
    ```bash
    git clone https://github.com/SouravTanwar/MiniLinkFrontend.git
 
+2. **Install dependencies:**
+   ```bash
+   cd MiniLinkFrontend
+   npm install
+
+
+3. **Start the frontend:
+   ```bash
+   cd MiniLinkFrontend
+   npm run dev
